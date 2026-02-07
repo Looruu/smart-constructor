@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Constructor v1 – Generador Modular ERC20</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Intro -->
+        <section class="card fade-in">
+            <h1 class="title">Smart Constructor v1</h1>
+            <p class="text">
+                Smart Constructor es un generador modular de tokens ERC20 basado en Solidity. 
+                Permite combinar módulos como Mint, Burn, Pause, Permit, Snapshot y más para crear 
+                contratos inteligentes personalizados, escalables y auditables.
+            </p>
+        </section>
+
+        <!-- Demo UI -->
+        <section class="card fade-in">
+            <h2 class="subtitle">Simulación de Selección de Módulos</h2>
+            <p class="text">Selecciona los módulos que deseas incluir en tu token ERC20:</p>
+
+            <div class="module-list">
+                <label><input type="checkbox" value="Mint"> Mint</label>
+                <label><input type="checkbox" value="Burn"> Burn</label>
+                <label><input type="checkbox" value="Pause"> Pause</label>
+                <label><input type="checkbox" value="Permit"> Permit (EIP‑2612)</label>
+                <label><input type="checkbox" value="Snapshot"> Snapshot</label>
+                <label><input type="checkbox" value="Cap"> Cap (Supply máximo)</label>
+                <label><input type="checkbox" value="Tax"> Tax Module</label>
+                <label><input type="checkbox" value="Blacklist"> Blacklist</label>
+                <label><input type="checkbox" value="Whitelist"> Whitelist</label>
+            </div>
+
+            <button id="generateBtn" class="btn-primary">Generar Contrato</button>
+
+            <div class="result-container">
+                <h3 class="subtitle">Contrato generado:</h3>
+                <pre id="result" class="result-box">Aquí aparecerá el contrato generado...</pre>
+            </div>
+        </section>
+
+        <!-- Autor -->
+        <section class="card fade-in">
+            <h2 class="subtitle">Autor</h2>
+            <p class="text">
+                <strong>Rubén Acedo</strong><br>
+                Blockchain Developer · Smart Contract Architect · Web3 Systems Designer
+            </p>
+            <p class="text">
+                GitHub: <a href="https://github.com/Looruu" target="_blank">github.com/Looruu</a><br>
+                LinkedIn: <a href="https://www.linkedin.com/in/ruben-acedo/" target="_blank">linkedin.com/in/ruben-acedo</a>
+            </p>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
