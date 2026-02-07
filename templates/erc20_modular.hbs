@@ -1,0 +1,111 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/*
+    CONTRATO GENERADO AUTOMÁTICAMENTE
+    =================================
+    Este contrato fue generado por el Smart Constructor Modular.
+    Cada módulo activado o desactivado depende de las opciones seleccionadas.
+*/
+
+import "./contracts/TokenBase.sol";
+import "./contracts/modules/AccessControlModule.sol";
+
+{{#if mintable}}
+import "./contracts/modules/MintModule.sol";
+{{/if}}
+
+{{#if burnable}}
+import "./contracts/modules/BurnModule.sol";
+{{/if}}
+
+{{#if pausable}}
+import "./contracts/modules/PauseModule.sol";
+{{/if}}
+
+{{#if capEnabled}}
+import "./contracts/modules/CapModule.sol";
+{{/if}}
+
+{{#if permit}}
+import "./contracts/modules/PermitModule.sol";
+{{/if}}
+
+{{#if snapshot}}
+import "./contracts/modules/SnapshotModule.sol";
+{{/if}}
+
+{{#if taxes}}
+import "./contracts/modules/TaxModule.sol";
+{{/if}}
+
+{{#if blacklist}}
+import "./contracts/modules/BlacklistModule.sol";
+{{/if}}
+
+{{#if whitelist}}
+import "./contracts/modules/WhitelistModule.sol";
+{{/if}}
+
+/*
+    ENSAMBLADO DEL CONTRATO
+    ========================
+    Aquí se combinan dinámicamente todos los módulos seleccionados.
+*/
+
+contract {{name}}Token is
+    TokenBase,
+    AccessControlModule
+    {{#if mintable}}, MintModule{{/if}}
+    {{#if burnable}}, BurnModule{{/if}}
+    {{#if pausable}}, PauseModule{{/if}}
+    {{#if capEnabled}}, CapModule{{/if}}
+    {{#if permit}}, PermitModule{{/if}}
+    {{#if snapshot}}, SnapshotModule{{/if}}
+    {{#if taxes}}, TaxModule{{/if}}
+    {{#if blacklist}}, BlacklistModule{{/if}}
+    {{#if whitelist}}, WhitelistModule{{/if}}
+{
+    constructor()
+        TokenBase("{{name}}", "{{symbol}}", {{decimals}}, {{initialSupply}})
+        {{#if capEnabled}}
+        ERC20Capped({{cap}} * 10 ** {{decimals}})
+        {{/if}}
+        {{#if permit}}
+        PermitModule("{{name}}")
+        {{/if}}
+    {
+        _setupAdmin(msg.sender);
+    }
+
+    // Hooks combinados
+    function _beforeTokenTransfer(address from, address to, uint256 amount)
+        internal
+        override(
+            TokenBase
+            {{#if pausable}}, PauseModule{{/if}}
+            {{#if snapshot}}, SnapshotModule{{/if}}
+        )
+    {
+        {{#if blacklist}}
+        require(!blacklisted[from] && !blacklisted[to], "Blacklisted");
+        {{/if}}
+
+        {{#if whitelist}}
+        require(whitelisted[from] && whitelisted[to], "Not whitelisted");
+        {{/if}}
+
+        super._beforeTokenTransfer(from, to, amount);
+    }
+
+    // Taxes
+    {{#if taxes}}
+    function _transfer(address from, address to, uint256 amount)
+        internal
+        override
+    {
+        amount = _applyTax(from, amount);
+        super._transfer(from, to, amount);
+    }
+    {{/if}}
+}

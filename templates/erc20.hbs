@@ -1,0 +1,47 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+{{#if burnable}}
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+{{/if}}
+{{#if pausable}}
+import "@openzeppelin/contracts/security/Pausable.sol";
+{{/if}}
+{{#if mintable}}
+import "@openzeppelin/contracts/access/Ownable.sol";
+{{/if}}
+{{#if capEnabled}}
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
+{{/if}}
+{{#if permit}}
+import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
+{{/if}}
+
+contract {{name}} is 
+    ERC20
+    {{#if burnable}}, ERC20Burnable{{/if}}
+    {{#if pausable}}, Pausable{{/if}}
+    {{#if mintable}}, Ownable{{/if}}
+    {{#if capEnabled}}, ERC20Capped{{/if}}
+    {{#if permit}}, ERC20Permit{{/if}}
+{
+    constructor() 
+        ERC20("{{name}}", "{{symbol}}")
+        {{#if capEnabled}} ERC20Capped({{cap}} * 10**{{decimals}}) {{/if}}
+        {{#if permit}} ERC20Permit("{{name}}") {{/if}}
+    {
+        _mint(msg.sender, {{initialSupply}} * 10**{{decimals}});
+    }
+
+    {{#if mintable}}
+    function mint(address to, uint256 amount) external onlyOwner {
+        _mint(to, amount);
+    }
+    {{/if}}
+
+    {{#if pausable}}
+    function pause() external onlyOwner { _pause(); }
+    function unpause() external onlyOwner { _unpause(); }
+    {{/if}}
+}
