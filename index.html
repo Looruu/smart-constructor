@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Constructor v1 – Generador Modular ERC20</title>
+    <title>Smart Constructor v1.2 – Generador Modular ERC20</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,18 +12,27 @@
 
         <!-- Intro -->
         <section class="card fade-in">
-            <h1 class="title">Smart Constructor v1</h1>
+            <h1 class="title">Smart Constructor v1.2</h1>
             <p class="text">
-                Smart Constructor es un generador modular de tokens ERC20 basado en Solidity. 
-                Permite combinar módulos como Mint, Burn, Pause, Permit, Snapshot y más para crear 
-                contratos inteligentes personalizados, escalables y auditables.
+                Generador modular de tokens ERC20 basado en Solidity.  
+                Selecciona módulos, define parámetros y genera un contrato inteligente listo para usar.
             </p>
         </section>
 
-        <!-- Demo UI -->
+        <!-- Token Parameters -->
         <section class="card fade-in">
-            <h2 class="subtitle">Simulación de Selección de Módulos</h2>
-            <p class="text">Selecciona los módulos que deseas incluir en tu token ERC20:</p>
+            <h2 class="subtitle">Parámetros del Token</h2>
+
+            <div class="calculator-inputs">
+                <input type="text" id="tokenName" placeholder="Nombre del Token" class="input">
+                <input type="text" id="tokenSymbol" placeholder="Símbolo" class="input">
+                <input type="number" id="tokenSupply" placeholder="Supply Inicial" class="input">
+            </div>
+        </section>
+
+        <!-- Module Selection -->
+        <section class="card fade-in">
+            <h2 class="subtitle">Selecciona los módulos</h2>
 
             <div class="module-list">
                 <label><input type="checkbox" value="Mint"> Mint</label>
@@ -38,6 +47,7 @@
             </div>
 
             <button id="generateBtn" class="btn-primary">Generar Contrato</button>
+            <button id="downloadBtn" class="btn-primary" style="margin-top:10px;">Descargar .sol</button>
 
             <div class="result-container">
                 <h3 class="subtitle">Contrato generado:</h3>
